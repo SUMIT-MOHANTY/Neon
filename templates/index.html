@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- DEBUG: template=index.html rendered={{ current_timestamp | default('unknown') }} -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="NexaTech - Innovative solutions for tomorrow's challenges">
     <meta name="keywords" content="technology, innovation, software, solutions">
     <meta name="author" content="NexaTech">
-
+    
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
     <!-- Brand Assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
+    
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="/static/css/main.css">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
     <!-- Page Title -->
-    <title>NexaTech | Home</title>
-
+    <title>{{ page_title or 'NexaTech | Home' }}</title>
+    
     <!-- Error Handling: Monitor document loading issues -->
     <script>
         // PAGE-LEVEL ERROR HANDLING & LOGGING
@@ -33,21 +34,21 @@
                 this.startTime = Date.now();
                 this.init();
             }
-
+            
             init() {
                 this.setupGlobalErrorHandler();
                 this.setupResourceErrorHandler();
                 this.setupNetworkMonitoring();
                 this.log('PageMonitor initialized');
             }
-
+            
             log(message, level = 'INFO') {
                 const timestamp = new Date().toISOString();
                 const entry = { timestamp, level, message };
                 this.logs.push(entry);
                 console[level.toLowerCase()] || console.log(`[${level}] ${timestamp}: ${message}`);
             }
-
+            
             reportError(error, context) {
                 const errorData = {
                     message: error.message,
@@ -57,15 +58,15 @@
                     timestamp: new Date().toISOString(),
                     context: context
                 };
-
+                
                 // In production, you'd send this to your logging service
                 this.log(`ERROR: ${error.message} (${JSON.stringify(context)})`, 'ERROR');
                 console.error('Error details:', errorData);
-
+                
                 // Display user-friendly error message
                 this.showUserErrorMessage();
             }
-
+            
             setupGlobalErrorHandler() {
                 window.addEventListener('error', (event) => {
                     this.reportError(
@@ -73,7 +74,7 @@
                         `Global: ${event.filename}:${event.lineno}:${event.colno}`
                     );
                 });
-
+                
                 window.addEventListener('unhandledrejection', (event) => {
                     this.reportError(
                         event.reason,
@@ -81,7 +82,7 @@
                     );
                 });
             }
-
+            
             setupResourceErrorHandler() {
                 document.addEventListener('DOMContentLoaded', () => {
                     const resources = document.querySelectorAll('img, link, script');
@@ -95,7 +96,7 @@
                     });
                 });
             }
-
+            
             setupNetworkMonitoring() {
                 // Monitor fetch/network failures
                 const originalFetch = window.fetch;
@@ -107,7 +108,7 @@
                         });
                 };
             }
-
+            
             showUserErrorMessage() {
                 const errorBanner = document.getElementById('error-banner');
                 if (errorBanner) {
@@ -120,7 +121,7 @@
                     `;
                 }
             }
-
+            
             runTests() {
                 // Basic Validation Tests
                 const tests = [
@@ -133,7 +134,7 @@
                     { name: 'Bootstrap CSS loaded', test: () => !!document.querySelector('link[href*="bootstrap"]') },
                     { name: 'Brand favicon', test: () => !!document.querySelector('link[rel*="icon"]') }
                 ];
-
+                
                 tests.forEach(({name, test}) => {
                     try {
                         const passed = test();
@@ -143,7 +144,7 @@
                     }
                 });
             }
-
+            
             getPerformanceMetrics() {
                 return {
                     loadTime: Date.now() - this.startTime,
@@ -152,32 +153,34 @@
                 };
             }
         }
-
+        
         // Initialize monitoring on page load
         window.pageMonitor = new PageMonitor();
     </script>
 </head>
-
 <body>
     <!-- Error Banner Container -->
     <div id="error-banner" class="d-none position-fixed top-0 start-0 w-100 z-index-1050"></div>
-
+    
     <!-- Skip Link for Accessibility -->
     <a href="#main-content" class="sr-only sr-only-focusable btn btn-primary position-absolute top-0 start-0 m-3 z-index-1055">Skip to main content</a>
-
+    
     <!-- Header with Semantic Navigation -->
-    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <nav class="container-xl" aria-label="Main navigation">
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" aria-label="Main navigation">
+        <nav class="container-xl">
             <a class="navbar-brand d-flex align-items-center" href="/" aria-label="NexaTech home">
-                <img src="/static/images/logo.svg" alt="NexaTech logo" width="40" height="40" class="me-2" onerror="this.onerror=null;this.src='/static/images/logo-fallback.png';">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" 
+                     alt="NexaTech logo" 
+                     width="40" 
+                     height="40" 
+                     class="me-2"
+                     onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/logo-fallback.png') }}';">
                 <span class="fw-bold text-primary">NexaTech</span>
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
@@ -185,7 +188,6 @@
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
-
                 <form class="d-flex" role="search" aria-label="Site search">
                     <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
@@ -193,7 +195,7 @@
             </div>
         </nav>
     </header>
-
+    
     <!-- Hero Section with Semantic Structure -->
     <main id="main-content">
         <section class="hero-section" role="banner" aria-labelledby="hero-title">
@@ -201,34 +203,32 @@
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
                         <h1 id="hero-title" class="display-4 fw-bold lh-1 mb-3">
-                            Revolutionize Your Business with <span class="text-primary">NexaTech</span>
+                            {{ hero_headline or 'Revolutionize Your Business with <span class="text-primary">NexaTech</span>' | safe }}
                         </h1>
                         <p class="lead fs-5 text-muted">
-                            Discover cutting-edge technological solutions designed to accelerate growth,
-                            streamline operations, and transform challenges into opportunities.
+                            {{ hero_subtext or 'Discover cutting-edge technological solutions designed to accelerate growth, streamline operations, and transform challenges into opportunities.' }}
                         </p>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2"
-                                    onclick="trackAction('get-started-hero')">
-                                Get Started
+                            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="trackAction('get-started-hero')">
+                                Get Started    
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-lg px-4"
-                                    onclick="trackAction('demo-hero')">
+                            <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="trackAction('demo-hero')">
                                 View Demo
                             </button>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <img src="/static/images/hero-illustration.svg"
-                             class="img-fluid rounded-3 shadow-sm"
-                             alt="Modern technology workspace illustration"
-                             loading="lazy"
-                             width="600" height="400">
+                        <img src="{{ url_for('static', filename='images/hero-illustration.jpg') }}" 
+                             class="img-fluid rounded-3 shadow-sm" 
+                             alt="{{ hero_image_alt or 'Modern technology workspace illustration' }}"
+                             loading="lazy" 
+                             width="600" 
+                             height="400">
                     </div>
                 </div>
             </div>
         </section>
-
+        
         <!-- Features Section -->
         <section id="features" class="py-5 bg-light" aria-labelledby="features-heading">
             <div class="container-xl">
@@ -236,7 +236,6 @@
                     <h2 id="features-heading" class="display-5 fw-bold mb-3">Powerful Features</h2>
                     <p class="lead text-muted">Everything you need to succeed in the digital age</p>
                 </header>
-
                 <div class="row g-4">
                     <article class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm">
@@ -249,240 +248,98 @@
                             </div>
                         </div>
                     </article>
-
                     <article class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm">
                             <div class="card-body">
-                                <div class="d-inline-flex align-items-center justify-content-center fs-2 mb-3 text-success">
+                                <div class="d-inline-flex align-items-center justify-content-center fs-2 mb-3 text-primary">
                                     <i class="bi bi-shield-check"></i>
                                 </div>
-                                <h3 class="h5 fw-bold">Enterprise Security</h3>
-                                <p class="card-text">Bank-level encryption and security protocols to protect your most valuable assets.</p>
+                                <h3 class="h5 fw-bold">Secure by Design</h3>
+                                <p class="card-text">Enterprise-grade security built into every layer, ensuring your data remains protected.</p>
                             </div>
                         </div>
                     </article>
-
                     <article class="col-md-4">
                         <div class="card h-100 border-0 shadow-sm">
                             <div class="card-body">
-                                <div class="d-inline-flex align-items-center justify-content-center fs-2 mb-3 text-info">
+                                <div class="d-inline-flex align-items-center justify-content-center fs-2 mb-3 text-primary">
                                     <i class="bi bi-graph-up"></i>
                                 </div>
-                                <h3 class="h5 fw-bold">Advanced Analytics</h3>
-                                <p class="card-text">Comprehensive insights and data visualization tools to make informed decisions.</p>
+                                <h3 class="h5 fw-bold">Scalable Solutions</h3>
+                                <p class="card-text">Grow without limits. Our solutions adapt and scale with your business needs.</p>
                             </div>
                         </div>
                     </article>
                 </div>
             </div>
         </section>
-
-        <!-- Services Section -->
-        <section id="services" class="py-5" aria-labelledby="services-heading">
-            <div class="container-xl">
-                <header class="text-center mb-5">
-                    <h2 id="services-heading" class="display-5 fw-bold mb-3">Our Services</h2>
-                    <p class="lead text-muted">Tailored solutions for every business need</p>
-                </header>
-
-                <div class="row g-4">
-                    <div class="col-lg-4">
-                        <article class="service-item">
-                            <h3 class="h4 mb-3">Cloud Solutions</h3>
-                            <p>Scalable cloud infrastructure built for modern applications</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"> Multi-cloud deployment</li>
-                                <li class="mb-2"> Auto-scaling</li>
-                                <li class="mb-2"> 99.9% uptime SLA</li>
-                            </ul>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <article class="service-item">
-                            <h3 class="h4 mb-3">AI & Machine Learning</h3>
-                            <p>Harness the power of artificial intelligence</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"> Custom model development</li>
-                                <li class="mb-2"> Real-time predictions</li>
-                                <li class="mb-2"> Natural language processing</li>
-                            </ul>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <article class="service-item">
-                            <h3 class="h4 mb-3">Digital Transformation</h3>
-                            <p>Transform your business for the digital era</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"> Process automation</li>
-                                <li class="mb-2"> Legacy system migration</li>
-                                <li class="mb-2"> Change management</li>
-                            </ul>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact CTA Section -->
-        <section class="cta-section bg-gradient py-5" aria-labelledby="cta-heading">
-            <div class="container-xl text-center py-5">
-                <h2 id="cta-heading" class="display-5 fw-bold text-white mb-4">
-                    Ready to Get Started?
-                </h2>
-                <p class="lead text-white-50 mb-4">
-                    Join thousands of businesses already using NexaTech
-                </p>
-                <button type="button" class="btn btn-light btn-lg px-5"
-                        onclick="openContactModal()">
-                    Request a Demo
-                </button>
-            </div>
+        
+        <!-- Content Section with Jinja fallback -->
+        <section id="content" aria-labelledby="content-heading">
+            <h2 id="content-heading" class="sr-only">Main content</h2>
+            <p class="body-copy" data-testid="body-copy">
+                {{ body_copy or 'NexaTech represents clarity of thought and purposeful innovation. We create meaningful technology solutions through intentional design and thoughtful interaction.' }}
+            </p>
         </section>
     </main>
-
-    <!-- Footer with Semantic Information -->
-    <footer class="bg-dark text-light py-5" role="contentinfo">
+    
+    <footer class="bg-light py-4">
         <div class="container-xl">
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <h3 class="h5 mb-3">NexaTech</h3>
-                    <p class="text-light-50">
-                        &copy; 2024 NexaTech Solutions. All rights reserved.
-                        Building the future of technology, one solution at a time.
-                    </p>
-                </div>
-
-                <div class="col-lg-2">
-                    <h4 class="h6 mb-3">Products</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="/cloud" class="link-light">Cloud Platform</a></li>
-                        <li><a href="/ai" class="link-light">AI Services</a></li>
-                        <li><a href="/analytics" class="link-light">Analytics Suite</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2">
-                    <h4 class="h6 mb-3">Company</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="/about" class="link-light">About Us</a></li>
-                        <li><a href="/careers" class="link-light">Careers</a></li>
-                        <li><a href="/press" class="link-light">Press</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4">
-                    <h4 class="h6 mb-3">Stay Updated</h4>
-                    <form class="needs-validation" novalidate onsubmit="handleNewsletterSubmit(event)">
-                        <div class="mb-3">
-                            <label for="newsletterEmail" class="visually-hidden">Email address</label>
-                            <input type="email" class="form-control" id="newsletterEmail"
-                                   placeholder="Enter your email" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid email address.
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-
-            <hr class="mt-4 mb-4">
-
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
-                <div class="text-center text-sm-start">
-                    <p class="text-light-50 mb-2 mb-sm-0">
-                        Built with <span aria-label="love"></span> using modern technologies
-                    </p>
-                </div>
-
-                <div class="text-center text-sm-end">
-                    <a href="/privacy" class="link-light text-decoration-none me-3">Privacy Policy</a>
-                    <a href="/terms" class="link-light text-decoration-none">Terms of Service</a>
-                </div>
-            </div>
+            <p class="text-center">&copy; {{ current_year or '2024' }} NexaTech. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"></script>
-
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-    <!-- Core Application JavaScript -->
-    <script src="/static/js/app.js"></script>
-
-    <!-- Runtime Error Tests -->
+    
+    <!-- Runtime validation script -->
     <script>
-        // Execute validation tests when page is ready
-        window.addEventListener('load', function() {
-            if (window.pageMonitor) {
-                pageMonitor.runTests();
-                console.table(pageMonitor.getPerformanceMetrics());
+        // Check required elements exist
+        ['hero', 'hero-heading', 'features', 'content', 'main-content'].forEach(id => {
+            if (!document.getElementById(id)) {
+                console.error('Missing required element with id:', id);
             }
         });
-
-        // Contact modal handler
-        function openContactModal() {
-            if (window.pageMonitor) {
-                pageMonitor.log('Contact modal requested');
-            }
-
-            // Check if modal exists, otherwise create simple alert
-            const modal = new bootstrap.Modal(document.getElementById('contactModal') ||
-                                             { show: () => alert('Contact form would open here. Ensure contact.html exists.') });
-            modal.show();
-        }
-
-        // Newsletter form handler
-        function handleNewsletterSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const email = form.querySelector('#newsletterEmail').value;
-
-            // Basic email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!emailRegex.test(email)) {
-                form.classList.add('was-validated');
-                return;
-            }
-
-            // Simulate API call
-            fetch('/api/newsletter', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Thank you for subscribing!');
-                form.reset();
-                form.classList.remove('was-validated');
-            })
-            .catch(error => {
-                if (window.pageMonitor) {
-                    pageMonitor.reportError(
-                        new Error('Newsletter subscription failed'),
-                        { email, error: error.message }
-                    );
-                }
-            });
-        }
-
-        // Track user actions
-        function trackAction(actionName) {
-            if (window.pageMonitor) {
-                pageMonitor.log(`User action tracked: ${actionName}`);
-            }
-
-            // In production, send to analytics service
-            gtag('event', actionName, { page: window.location.pathname });
+        
+        // Let PageMonitor run its validation tests
+        if (window.pageMonitor && typeof window.pageMonitor.runTests === 'function') {
+            window.pageMonitor.runTests();
+            // Optional: Log successful load
+            console.log('NexaTech page loaded successfully');
+            console.log('Performance metrics:', window.pageMonitor.getPerformanceMetrics());
         }
     </script>
+    
+    <!-- No-script fallback styles -->
+    <noscript>
+        <style>
+            /* Ensure basic functionality without CSS/JS */
+            #hero, .hero-section { 
+                background: #f8f9fa; 
+                padding: 2rem; 
+                text-align: center; 
+            }
+            .hero-headline { 
+                color: #333; 
+                font-size: 2rem; 
+                margin-bottom: 1rem; 
+            }
+            .body-copy { 
+                color: #666; 
+                line-height: 1.6; 
+                max-width: 600px; 
+                margin: 0 auto; 
+                padding: 2rem; 
+            }
+            /* Screen reader only class */
+            .sr-only { 
+                position: absolute; 
+                left: -9999px; 
+                width: 1px; 
+                height: 1px; 
+                overflow: hidden; 
+            }
+        </style>
+    </noscript>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
