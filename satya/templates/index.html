@@ -1,60 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to Satya - Transform your business with our innovative solutions">
-    <title>Satya - Transform Your Business</title>
-
-    <!-- PRE-CONNECT FOR PERFORMANCE -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- CSS & TYPOGRAPHY -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>{{ title or "Satya" }} {{ TODO: future dynamic injection }}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Satya - a clean single landing page demo" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to Satya</h1>
-            <p class="hero-subtitle">Transform your business with innovative solutions that drive growth and deliver exceptional value</p>
-            <a href="#features" class="cta-button">Get Started</a>
+    <header class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="hero-headline">Welcome to Satya</h1>
+            <p class="hero-subtitle">{{ subtitle or "Simplicity meets design." }} {{ TODO: future dynamic injection }}</p>
+            <a href="#learn-more" class="btn-cta">Learn More</a>
         </div>
-    </section>
+    </header>
 
-    <!-- FEATURES SECTION -->
-    <section id="features" class="features-section">
+    <main id="learn-more" class="feature-section">
         <div class="container">
-            <h2 class="section-title">Why Choose Satya</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3 class="feature-title">Fast Integration</h3>
-                    <p class="feature-description">Seamlessly integrate with your existing systems in minutes, not weeks</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3 class="feature-title">Smart Insights</h3>
-                    <p class="feature-description">Leverage AI-powered analytics to make data-driven decisions with confidence</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3 class="feature-title">Enterprise Security</h3>
-                    <p class="feature-description">Bank-grade security standards keep your data safe and compliant</p>
-                </div>
-            </div>
+            <h2 class="feature-title">Features</h2>
+            <ul class="feature-list">
+                <li>Responsive & mobile-first</li>
+                <li>WCAG-friendly color palette</li>
+                <li>Buttery smooth animations</li>
+            </ul>
         </div>
-    </section>
+    </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2024 Satya. <a href="#" class="footer-link">Privacy Policy</a></p>
-        </div>
+    <footer class="page-footer">
+        <span>&copy; 2024 Satya Project. All rights reserved.</span>
     </footer>
 </body>
 </html>
