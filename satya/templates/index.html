@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Satya Landing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
+  </head>
+  <body>
+    <section class="hero-section">
+      <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="" class="hero-image"/>
+      <div class="hero-content">
+        <h1 class="hero-headline">Welcome to Satya</h1>
+        <p class="hero-subtext">
+          A minimal, modern landing page powered by Flask.
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
