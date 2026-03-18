@@ -1,11 +1,8 @@
-"""Flask application for serving the landing page and static assets.
-Root route / renders templates/index.html.
-"""
 import logging
 import os
-from flask import Flask, render_template, Response, abort
+import traceback
+from flask import Flask, render_template, abort
 
-# --- Configuration ----------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s] [%(levelname)s] %(message)s",
@@ -13,7 +10,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Absolute path guarantees consistent behaviour regardless of CWD
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 logger.info("Static folder path: %s", STATIC_DIR)
 
@@ -25,20 +21,18 @@ app = Flask(
 )
 logger.info("Flask app instantiated")
 
-# --- Routes -----------------------------------------------------------------
-@app.route("/", methods=["GET"])
-def landing() -> Response:
+@app.route('/', methods=['GET'])
+def landing_page():
     """Serve the landing page using Jinja template."""
     try:
         logger.info("GET /")
-        response = render_template("index.html")
+        response = render_template('index.html')
         logger.debug("Template rendered successfully.")
-        return response
-    except Exception as exc:
-        logger.error("Template rendering failed: %s", exc, exc_info=True)
-        abort(500)
+        return response, 200
+    except Exception as e:
+        logger.error("Template rendering failed: %s", e, exc_info=True)
+        return traceback.format_exc(), 500, {'Content-Type': 'text/plain'}
 
-# --- Entry Point ------------------------------------------------------------
-if __name__ == "__main__":
-    # For dev convenience; gunicorn in production
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
