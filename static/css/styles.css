@@ -1,9 +1,5 @@
 /* ===== CSS RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ===== ROOT VARIABLES ===== */
 :root {
@@ -59,7 +55,7 @@ a:hover {
   padding: 0 20px;
 }
 
-/* ===== HERO SECTION (merged from multiple sources) ===== */
+/* ===== HERO SECTION ===== */
 .hero {
   height: 80vh;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -86,29 +82,28 @@ a:hover {
   opacity: 0.3;
 }
 
-.hero-content,
-.hero-background {
+.hero-content {
   position: relative;
   z-index: 1;
 }
 
-.hero h1,
-.hero-heading {
+.hero h1, .hero-heading {
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--white);
   margin-bottom: 1rem;
 }
 
-.hero p,
-.hero-subtext {
+.hero p, .hero-subtext {
   font-size: 1.25rem;
   color: var(--white);
   max-width: 600px;
   margin-bottom: 2rem;
 }
 
-.hero-background {
+.hero-background, .hero img {
+  position: relative;
+  z-index: 1;
   max-width: 600px;
   height: auto;
   border-radius: var(--border-radius);
@@ -117,8 +112,7 @@ a:hover {
 }
 
 /* ===== BUTTON STYLES ===== */
-.btn,
-.cta-button {
+.btn, .cta-button, button {
   display: inline-block;
   padding: 12px 30px;
   background: var(--accent-color);
@@ -132,8 +126,7 @@ a:hover {
   text-decoration: none;
 }
 
-.btn:hover,
-.cta-button:hover {
+.btn:hover, .cta-button:hover, button:hover {
   background: var(--primary-color);
   transform: translateY(-2px);
   box-shadow: var(--shadow);
@@ -179,7 +172,7 @@ a:hover {
   margin-top: 3rem;
 }
 
-.feature-card {
+.feature, .feature-card {
   background: var(--light-bg);
   padding: 40px;
   border-radius: var(--border-radius);
@@ -188,7 +181,7 @@ a:hover {
   box-shadow: var(--shadow);
 }
 
-.feature-card:hover {
+.feature-card:hover, .feature:hover {
   transform: translateY(-5px);
 }
 
@@ -199,44 +192,49 @@ a:hover {
 }
 
 /* ===== NAVBAR ===== */
-.navbar {
+header, .navbar {
   background: var(--white);
   padding: 1rem 0;
   box-shadow: var(--shadow);
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
 }
 
-.navbar .container {
+header nav ul, .navbar .container {
   display: flex;
+  list-style: none;
   justify-content: space-between;
   align-items: center;
 }
 
-.logo {
+header nav ul li, .nav-links {
+  margin: 0 1rem;
+}
+
+header a, .logo {
+  color: var(--primary-color);
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--primary-color);
+  text-decoration: none;
 }
 
 .nav-links {
   display: flex;
-  list-style: none;
   gap: 2rem;
 }
 
 /* ===== FOOTER ===== */
-.footer {
+footer, .footer {
   background: var(--primary-color);
   color: var(--white);
   text-align: center;
   padding: 40px 0;
 }
 
-.footer p {
+footer p, .footer p {
   color: var(--white);
 }
 
@@ -269,59 +267,24 @@ a:hover {
   text-align: center;
 }
 
-.mt-1 {
-  margin-top: 1rem;
-}
-
-.mt-2 {
-  margin-top: 2rem;
-}
-
-.mt-3 {
-  margin-top: 3rem;
-}
-
-.mb-1 {
-  margin-bottom: 1rem;
-}
-
-.mb-2 {
-  margin-bottom: 2rem;
-}
-
-.mb-3 {
-  margin-bottom: 3rem;
-}
-
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: block;
-}
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mt-3 { margin-top: 3rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+.hidden { display: none; }
+.visible { display: block; }
 
 /* ===== ANIMATIONS ===== */
 @keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in-up {
@@ -330,24 +293,20 @@ a:hover {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
-  .hero-section,
-  .hero {
+  .hero, .hero-section {
     height: auto;
     padding: 60px 1rem;
   }
 
-  .hero-heading,
-  .hero h1 {
+  .hero-heading, .hero h1 {
     font-size: 2rem;
   }
 
-  .hero-subtext,
-  .hero p {
+  .hero-subtext, .hero p {
     font-size: 1rem;
   }
 
-  .cta-button,
-  .btn {
+  .cta-button, .btn, button {
     font-size: 0.875rem;
     padding: 0.6rem 1.5rem;
   }
@@ -357,7 +316,7 @@ a:hover {
     gap: 20px;
   }
 
-  .nav-links {
+  header nav ul .nav-links {
     display: none;
   }
 
@@ -371,13 +330,22 @@ a:hover {
     padding: 0 15px;
   }
 
-  .hero-section,
-  .hero {
+  .hero, .hero-section {
     padding: 40px 0;
   }
 
-  .btn {
+  .btn, button {
     padding: 10px 20px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  header nav ul {
+    flex-direction: column;
+  }
+
+  .hero, .hero-section {
+    margin: 1rem;
   }
 }

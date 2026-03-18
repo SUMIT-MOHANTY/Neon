@@ -1,54 +1,65 @@
-/* Minimal responsive landing page styles with extended brand variables */
+/* Satya minimal styles */
 :root {
-  --primary-color: #0059ff;
-  --secondary-color: #222;
-  --accent-color: #D2B76E;
-  --text-color: #1C3144;
-  --light-color: #FFFFFF;
-  --background-light: #FFFFFF;
-  --error-color: #E63946;
-  --max-width: 1140px;
+  /* Colors */
+  --color-primary: #0059ff;
+  --color-secondary: #222;
+  --color-accent: #D2B76E;
+  --color-text: #1C3144;
+  --color-light: #FFFFFF;
+  --color-background: #ffffff;
+  --color-error: #E63946;
 
-  /* TYPOGRAPHY */
-  --font-headline: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Typography */
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-size-base: 16px;
   --line-height-base: 1.6;
-  /* SPACING */
+
+  /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 3rem;
-  --spacing-xl: 4rem;
-  /* BORDERS & SHADOWS */
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Layout */
+  --max-width: 1140px;
+
+  /* Borders & Shadows */
   --border-radius: 8px;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --box-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
+
 body {
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  color: var(--color-secondary);
-  background-color: var(--background-light);
+  background: var(--color-background);
+  color: var(--color-text);
   overflow-x: hidden;
 }
-html { scroll-behavior: smooth; }
 
-h1, h2, h3 { font-family: var(--font-headline); font-weight: 600; line-height: 1.2; }
-h1 { font-weight: 700; font-size: clamp(2rem, 5vw, 4rem); color: var(--primary-color); margin-bottom: var(--spacing-md); }
-h2 { font-size: clamp(2rem, 4vw, 3rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+html {
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-family);
+  font-weight: 600;
+  line-height: 1.2;
+}
 
 .hero-section {
+  position: relative;
+  width: 100vw;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,34 +68,53 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
   max-width: var(--max-width);
   margin: 5vh auto;
 }
-.hero-section h1 { color: var(--light-color); }
-.hero-section p {
-  font-size: 1.125rem;
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+  z-index: -1;
+}
+
+.hero-headline {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero-subtext {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: #6b7280;
   max-width: 40ch;
   margin: 0 auto var(--spacing-lg);
-  opacity: 0.9;
+  line-height: 1.6;
 }
 
 .btn-primary,
 .cta-button {
   display: inline-block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--accent-color);
-  color: var(--text-color);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-accent);
+  color: var(--color-text);
   border-radius: var(--border-radius);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
 }
+
 .btn-primary:hover,
 .cta-button:hover {
-  background-color: var(--secondary-color);
-  color: var(--light-color);
+  background-color: var(--color-secondary);
+  color: var(--color-light);
   transform: translateY(-2px);
   box-shadow: var(--box-shadow-hover);
 }
 
-/* Additional section scaffolding (optional / extensible) */
+/* Additional sections (optional) */
 .features-section,
 .footer {
   max-width: var(--max-width);
@@ -94,5 +124,7 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 }
 
 @media (max-width: 767px) {
-  .hero-section { padding: var(--spacing-sm); }
+  .hero-section {
+    padding: var(--spacing-sm);
+  }
 }

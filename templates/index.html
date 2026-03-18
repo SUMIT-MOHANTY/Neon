@@ -1,234 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="NexaTech - Innovative solutions for tomorrow's challenges">
- <meta name="keywords" content="technology, innovation, software, solutions">
- <meta name="author" content="NexaTech">
- <!-- Favicon -->
- <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
- <!-- Brand Assets -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
- <!-- Bootstrap CSS -->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
- <!-- Custom Styles -->
- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
- <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
- <!-- Page Title -->
- <title>{{ page_title or 'NexaTech | Home' }}</title>
- <!-- Error Handling: Monitor document loading issues -->
- <script>
- // PAGE-LEVEL ERROR HANDLING & LOGGING
- class PageMonitor {
- constructor() {
- this.logs = [];
- this.startTime = Date.now();
- this.init();
- }
- init() {
- this.setupGlobalErrorHandler();
- this.setupResourceErrorHandler();
- this.setupNetworkMonitoring();
- this.log('PageMonitor initialized');
- }
- log(message, level = 'INFO') {
- const timestamp = new Date().toISOString();
- const entry = { timestamp, level, message };
- this.logs.push(entry);
- console[level.toLowerCase()] || console.log(`[${level}] ${timestamp}: ${message}`);
- }
- reportError(error, context) {
- const errorData = {
- message: error.message,
- stack: error.stack,
- url: window.location.href,
- userAgent: navigator.userAgent,
- timestamp: new Date().toISOString(),
- context: context
- };
- this.log(`ERROR: ${error.message} (${JSON.stringify(context)})`, 'ERROR');
- console.error('Error details:', errorData);
- this.showUserErrorMessage();
- }
- setupGlobalErrorHandler() {
- window.addEventListener('error', (event) => {
- this.reportError(
- event.error || event,
- `Global: ${event.filename}:${event.lineno}:${event.colno}`
- );
- });
- window.addEventListener('unhandledrejection', (event) => {
- this.reportError(
- event.reason,
- 'Unhandled Promise Rejection'
- );
- });
- }
- setupResourceErrorHandler() {
- document.addEventListener('DOMContentLoaded', () => {
- const resources = document.querySelectorAll('img, link, script');
- resources.forEach(resource => {
- resource.addEventListener('error', (event) => {
- this.reportError(
- new Error(`Failed to load: ${event.target.src || event.target.href}`),
- 'Resource Loading'
- );
- });
- });
- });
- }
- setupNetworkMonitoring() {
- const originalFetch = window.fetch;
- window.fetch = (...args) => {
- return originalFetch.apply(this, args)
- .catch(error => {
- this.reportError(error, 'Network Request');
- throw error;
- });
- };
- }
- showUserErrorMessage() {
- const errorBanner = document.getElementById('error-banner');
- if (errorBanner) {
- errorBanner.classList.remove('d-none');
- errorBanner.innerHTML = `
- <div class="alert alert-danger">
- <strong>Oops!</strong> Something went wrong. Please refresh the page and try again.
- <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
- </div>
- `;
- }
- }
- runTests() {
- const tests = [
- { name: 'Viewport meta tag', test: () => !!document.querySelector('meta[name="viewport"]') },
- { name: 'Title exists', test: () => document.title && document.title.length > 0 },
- { name: 'Charset UTF-8', test: () => document.characterSet === 'UTF-8' },
- { name: 'Semantic header', test: () => !!document.querySelector('header') },
- { name: 'Semantic main', test: () => !!document.querySelector('main') },
- { name: 'Semantic footer', test: () => !!document.querySelector('footer') },
- { name: 'Bootstrap CSS loaded', test: () => !!document.querySelector('link[href*="bootstrap"]') },
- { name: 'Brand favicon', test: () => !!document.querySelector('link[rel*="icon"]') }
- ];
- tests.forEach(({name, test}) => {
- try {
- const passed = test();
- this.log(`Test ${name}: ${passed ? 'PASS' : 'FAIL'}`);
- } catch (e) {
- this.log(`Test ${name}: ERROR - ${e.message}`);
- }
- });
- }
- getPerformanceMetrics() {
- return {
- loadTime: Date.now() - this.startTime,
- domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart,
- complete: performance.timing.loadEventEnd - performance.timing.navigationStart
- };
- }
- }
- window.pageMonitor = new PageMonitor();
- </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NexaTech - Innovative solutions for tomorrow's challenges">
+    <meta name="keywords" content="technology, innovation, software, solutions">
+    <meta name="author" content="NexaTech">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <!-- Brand Assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Page Title -->
+    <title>{{ page_title or 'NexaTech | Home' }}</title>
+    <!-- Error Handling: Monitor document loading issues -->
+    <script>
+        // PAGE-LEVEL ERROR HANDLING & LOGGING
+        class PageMonitor {
+            constructor() {
+                this.logs = [];
+                this.startTime = Date.now();
+                this.init();
+            }
+            init() {
+                this.setupGlobalErrorHandler();
+                this.setupResourceErrorHandler();
+                this.setupNetworkMonitoring();
+                this.log('PageMonitor initialized');
+            }
+            log(message, level = 'INFO') {
+                const timestamp = new Date().toISOString();
+                const entry = { timestamp, level, message };
+                this.logs.push(entry);
+                console[level.toLowerCase()] || console.log(`[${level}] ${timestamp}: ${message}`);
+            }
+            reportError(error, context) {
+                const errorData = {
+                    message: error.message,
+                    stack: error.stack,
+                    url: window.location.href,
+                    userAgent: navigator.userAgent,
+                    timestamp: new Date().toISOString(),
+                    context: context
+                };
+                this.log(`ERROR: ${error.message} (${JSON.stringify(context)})`, 'ERROR');
+                console.error('Error details:', errorData);
+                this.showUserErrorMessage();
+            }
+            setupGlobalErrorHandler() {
+                window.addEventListener('error', (event) => {
+                    this.reportError(
+                        event.error || event,
+                        `Global: ${event.filename}:${event.lineno}:${event.colno}`
+                    );
+                });
+                window.addEventListener('unhandledrejection', (event) => {
+                    this.reportError(
+                        event.reason,
+                        'Unhandled Promise Rejection'
+                    );
+                });
+            }
+            setupResourceErrorHandler() {
+                document.addEventListener('DOMContentLoaded', () => {
+                    const resources = document.querySelectorAll('img, link, script');
+                    resources.forEach(resource => {
+                        resource.addEventListener('error', (event) => {
+                            this.reportError(
+                                new Error(`Failed to load: ${event.target.src || event.target.href}`),
+                                'Resource Loading'
+                            );
+                        });
+                    });
+                });
+            }
+            setupNetworkMonitoring() {
+                const originalFetch = window.fetch;
+                window.fetch = (...args) => {
+                    return originalFetch.apply(this, args)
+                        .catch(error => {
+                            this.reportError(error, 'Network Request');
+                            throw error;
+                        });
+                };
+            }
+            showUserErrorMessage() {
+                const errorBanner = document.getElementById('error-banner');
+                if (errorBanner) {
+                    errorBanner.classList.remove('d-none');
+                    errorBanner.innerHTML = `
+                        <div class="alert alert-danger">
+                            <strong>Oops!</strong> Something went wrong. Please refresh the page and try again.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    `;
+                }
+            }
+            runTests() {
+                const tests = [
+                    { name: 'Viewport meta tag', test: () => !!document.querySelector('meta[name="viewport"]') },
+                    { name: 'Title exists', test: () => document.title && document.title.length > 0 },
+                    { name: 'Charset UTF-8', test: () => document.characterSet === 'UTF-8' },
+                    { name: 'Semantic header', test: () => !!document.querySelector('header') },
+                    { name: 'Semantic main', test: () => !!document.querySelector('main') },
+                    { name: 'Semantic footer', test: () => !!document.querySelector('footer') },
+                    { name: 'Bootstrap CSS loaded', test: () => !!document.querySelector('link[href*="bootstrap"]') },
+                    { name: 'Brand favicon', test: () => !!document.querySelector('link[rel*="icon"]') }
+                ];
+                tests.forEach(({name, test}) => {
+                    try {
+                        const passed = test();
+                        this.log(`Test ${name}: ${passed ? 'PASS' : 'FAIL'}`);
+                    } catch (e) {
+                        this.log(`Test ${name}: ERROR - ${e.message}`);
+                    }
+                });
+            }
+            getPerformanceMetrics() {
+                return {
+                    loadTime: Date.now() - this.startTime,
+                    domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart,
+                    complete: performance.timing.loadEventEnd - performance.timing.navigationStart
+                };
+            }
+        }
+        window.pageMonitor = new PageMonitor();
+    </script>
 </head>
 <body>
- <!-- Error Banner Container -->
- <div id="error-banner" class="d-none position-fixed top-0 start-0 w-100 z-index-1050"></div>
- <!-- Skip Link for Accessibility -->
- <a href="#main-content" class="sr-only sr-only-focusable btn btn-primary position-absolute top-0 start-0 m-3 z-index-1055">Skip to main content</a>
- <!-- Header with Semantic Navigation -->
- <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" aria-label="Main navigation">
- <nav class="container-xl">
- <a class="navbar-brand d-flex align-items-center" href="/" aria-label="NexaTech home">
- <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="NexaTech logo" width="40" height="40" class="me-2" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/logo-fallback.png') }}';">
- <span class="fw-bold text-primary">NexaTech</span>
- </a>
- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
- <span class="navbar-toggler-icon"></span>
- </button>
- <div class="collapse navbar-collapse" id="navbarContent">
- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
- <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
- <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
- <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
- <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
- </ul>
- <form class="d-flex" role="search" aria-label="Site search">
- <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
- <button class="btn btn-outline-primary" type="submit">Search</button>
- </form>
- </div>
- </nav>
- </header>
- <!-- Hero Section with Semantic Structure -->
- <main id="main-content">
- <section class="hero-section" role="banner" aria-labelledby="hero-title">
- <div class="container-xl py-5">
- <div class="row align-items-center g-5">
- <div class="col-lg-6">
- <h1 id="hero-title" class="display-4 fw-bold lh-1 mb-3">
- {{ hero_headline or 'Flask App is Running!' | safe }}
- </h1>
- <p class="lead fs-5 text-muted">
- {{ hero_subtext or 'Static files are working if you can see the styled text and image above.' }}
- </p>
- <div class="d-grid gap-2 d-md-flex justify-content-md-start">
- <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="trackAction('get-started-hero')">Get Started</button>
- <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="trackAction('demo-hero')">View Demo</button>
- </div>
- </div>
- <div class="col-lg-6">
- <img src="{{ url_for('static', filename='images/hero.jpg') }}" class="img-fluid rounded-3 shadow-sm" alt="{{ hero_image_alt or 'Hero image' }}" loading="lazy" width="600" height="400">
- </div>
- </div>
- </div>
- </section>
- <!-- Features Section -->
- <section id="features" class="py-5 bg-light" aria-labelledby="features-heading">
- <div class="container-xl">
- <header class="text-center mb-5">
- <h2 id="features-heading" class="display-5 fw-bold mb-3">Powerful Features</h2>
- <p class="lead text-muted">Everything you need to succeed in the digital age</p>
- </header>
- <div class="row g-4">
- <article class="col-md-4">
- <div class="card h-100 border-0 shadow-sm">
- <div class="card-body p-4 text-center">
- <div class="feature-icon bg-primary bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
- <h3 class="card-title h5 mb-3">Fast Performance</h3>
- <p class="card-text text-muted">Lightning-fast loading speeds for optimal user experience</p>
- </div>
- </div>
- </article>
- <article class="col-md-4">
- <div class="card h-100 border-0 shadow-sm">
- <div class="card-body p-4 text-center">
- <div class="feature-icon bg-success bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
- <h3 class="card-title h5 mb-3">Mobile Responsive</h3>
- <p class="card-text text-muted">Perfectly optimized for all devices and screen sizes</p>
- </div>
- </div>
- </article>
- <article class="col-md-4">
- <div class="card h-100 border-0 shadow-sm">
- <div class="card-body p-4 text-center">
- <div class="feature-icon bg-warning bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
- <h3 class="card-title h5 mb-3">Secure & Reliable</h3>
- <p class="card-text text-muted">Enterprise-grade security with 99.9% uptime guarantee</p>
- </div>
- </div>
- </article>
- </div>
- </div>
- </section>
- </main>
- <!-- Footer -->
- <footer class="bg-dark text-light py-4">
- <div class="container-xl text-center">
- <p>&copy; 2026 NexaTech. All rights reserved.</p>
- </div>
- </footer>
+    <!-- Error Banner Container -->
+    <div id="error-banner" class="d-none position-fixed top-0 start-0 w-100 z-index-1050"></div>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="sr-only sr-only-focusable btn btn-primary position-absolute top-0 start-0 m-3 z-index-1055">Skip to main content</a>
+    <!-- Header with Semantic Navigation -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" aria-label="Main navigation">
+        <nav class="container-xl">
+            <a class="navbar-brand d-flex align-items-center" href="/" aria-label="NexaTech home">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="NexaTech logo" width="40" height="40" class="me-2" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/logo-fallback.png') }}';">
+                <span class="fw-bold text-primary">NexaTech</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <form class="d-flex" role="search" aria-label="Site search">
+                    <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section with Semantic Structure -->
+    <main id="main-content">
+        <section class="hero-section" role="banner" aria-labelledby="hero-title">
+            <div class="container-xl py-5">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <h1 id="hero-title" class="display-4 fw-bold lh-1 mb-3">
+                            {{ hero_headline or 'Revolutionary Solutions Await' | safe }}
+                        </h1>
+                        <p class="lead fs-5 text-muted">
+                            {{ hero_subtext or 'Join thousands of satisfied customers transforming their business' }}
+                        </p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="trackAction('get-started-hero')">Get Started Today</button>
+                            <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="alert('Thank you for your interest!')">View Demo</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="{{ url_for('static', filename='images/hero.jpg') }}" class="img-fluid rounded-3 shadow-sm" alt="{{ hero_image_alt or 'Hero image' }}" loading="lazy" width="600" height="400" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2RkZCIvPjx0ZXh0IHg9IjIwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5Ij5IZXJvIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section id="features" class="py-5 bg-light" aria-labelledby="features-heading">
+            <div class="container-xl">
+                <header class="text-center mb-5">
+                    <h2 id="features-heading" class="display-5 fw-bold mb-3">Why Choose Us?</h2>
+                    <p class="lead text-muted">Everything you need to succeed in the digital age</p>
+                </header>
+                <div class="row g-4">
+                    <article class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="feature-icon bg-primary bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
+                                <h3 class="card-title h5 mb-3">Fast Performance</h3>
+                                <p class="card-text text-muted">Lightning-fast loading speeds for optimal user experience</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="feature-icon bg-success bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
+                                <h3 class="card-title h5 mb-3">Secure Platform</h3>
+                                <p class="card-text text-muted">Enterprise-grade security with 99.9% uptime guarantee</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="feature-icon bg-warning bg-gradient rounded-circle mx-auto mb-3" style="width: 80px; height: 80px;"></div>
+                                <h3 class="card-title h5 mb-3">24/7 Support</h3>
+                                <p class="card-text text-muted">Perfectly optimized for all devices and screen sizes</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container-xl text-center">
+            <p>&copy; 2024 NexaTech. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

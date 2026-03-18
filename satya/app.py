@@ -1,8 +1,9 @@
-""" Flask application for serving the landing page and static assets. Root route / renders templates/index.html. """
-
+"""Flask application for serving the landing page and static assets.
+Root route / renders templates/index.html.
+"""
 import logging
 import os
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, abort
 
 # --- Configuration ----------------------------------------------------------
 logging.basicConfig(
@@ -16,12 +17,17 @@ logger = logging.getLogger(__name__)
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 logger.info("Static folder path: %s", STATIC_DIR)
 
-app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/static")
+app = Flask(
+    __name__,
+    template_folder="templates",
+    static_folder=STATIC_DIR,
+    static_url_path="/static",
+)
 logger.info("Flask app instantiated")
 
 # --- Routes -----------------------------------------------------------------
 @app.route("/", methods=["GET"])
-def index() -> Response:
+def landing() -> Response:
     """Serve the landing page using Jinja template."""
     try:
         logger.info("GET /")
@@ -30,7 +36,7 @@ def index() -> Response:
         return response
     except Exception as exc:
         logger.error("Template rendering failed: %s", exc, exc_info=True)
-        return "Internal Server Error", 500
+        abort(500)
 
 # --- Entry Point ------------------------------------------------------------
 if __name__ == "__main__":
