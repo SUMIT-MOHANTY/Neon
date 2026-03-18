@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- DEBUG: template=index.html rendered={{ current_timestamp | default('unknown') }} -->
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta name="description" content="NexaTech - Innovative solutions for tomorrow's challenges">
@@ -50,10 +49,8 @@
  timestamp: new Date().toISOString(),
  context: context
  };
- // In production, you'd send this to your logging service
  this.log(`ERROR: ${error.message} (${JSON.stringify(context)})`, 'ERROR');
  console.error('Error details:', errorData);
- // Display user-friendly error message
  this.showUserErrorMessage();
  }
  setupGlobalErrorHandler() {
@@ -84,10 +81,9 @@
  });
  }
  setupNetworkMonitoring() {
- // Monitor fetch/network failures
  const originalFetch = window.fetch;
  window.fetch = (...args) => {
- return originalFetch.apply(window, args)
+ return originalFetch.apply(this, args)
  .catch(error => {
  this.reportError(error, 'Network Request');
  throw error;
@@ -107,7 +103,6 @@
  }
  }
  runTests() {
- // Basic Validation Tests
  const tests = [
  { name: 'Viewport meta tag', test: () => !!document.querySelector('meta[name="viewport"]') },
  { name: 'Title exists', test: () => document.title && document.title.length > 0 },
@@ -131,10 +126,10 @@
  return {
  loadTime: Date.now() - this.startTime,
  domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart,
- complete: performance.timing.loadEventEnd - performance.timing.navigationStart };
+ complete: performance.timing.loadEventEnd - performance.timing.navigationStart
+ };
  }
  }
- // Initialize monitoring on page load
  window.pageMonitor = new PageMonitor();
  </script>
 </head>
@@ -167,29 +162,25 @@
  </div>
  </nav>
  </header>
-<!-- Hero Section with Semantic Structure -->
+ <!-- Hero Section with Semantic Structure -->
  <main id="main-content">
  <section class="hero-section" role="banner" aria-labelledby="hero-title">
  <div class="container-xl py-5">
  <div class="row align-items-center g-5">
  <div class="col-lg-6">
  <h1 id="hero-title" class="display-4 fw-bold lh-1 mb-3">
- {{ hero_headline or 'Revolutionize Your Business with <span class="text-primary">NexaTech</span>' | safe }}
+ {{ hero_headline or 'Flask App is Running!' | safe }}
  </h1>
  <p class="lead fs-5 text-muted">
- {{ hero_subtext or 'Discover cutting-edge technological solutions designed to accelerate growth, streamline operations, and transform challenges into opportunities.' }}
+ {{ hero_subtext or 'Static files are working if you can see the styled text and image above.' }}
  </p>
  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
- <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="trackAction('get-started-hero')">
- Get Started
- </button>
- <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="trackAction('demo-hero')">
- View Demo
- </button>
+ <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="trackAction('get-started-hero')">Get Started</button>
+ <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="trackAction('demo-hero')">View Demo</button>
  </div>
  </div>
  <div class="col-lg-6">
- <img src="{{ url_for('static', filename='images/hero-illustration.jpg') }}" class="img-fluid rounded-3 shadow-sm" alt="{{ hero_image_alt or 'Modern technology workspace illustration' }}" loading="lazy" width="600" height="400">
+ <img src="{{ url_for('static', filename='images/hero.jpg') }}" class="img-fluid rounded-3 shadow-sm" alt="{{ hero_image_alt or 'Hero image' }}" loading="lazy" width="600" height="400">
  </div>
  </div>
  </div>
