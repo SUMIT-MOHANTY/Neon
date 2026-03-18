@@ -3,58 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Landing Page</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <title>Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Your Brand</div>
-            <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="hero" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Welcome to Your Brand</h1>
-                <p>Transform your business with our innovative solutions</p>
-                <a href="#features" class="btn">Get Started</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="text-center">Discover Our Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3>Fast Performance</h3>
-                    <p>Lightning-fast loading speeds for optimal user experience</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3>Mobile Responsive</h3>
-                    <p>Perfectly optimized for all devices and screen sizes</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"></div>
-                    <h3>Secure & Reliable</h3>
-                    <p>Enterprise-grade security with 99.9% uptime guarantee</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Your Brand. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="container">
+        <h1>Flask App is Running!</h1>
+        <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Hero" width="200">
+        <p style="color: #666; margin-top: 2rem;">
+            <strong>Status:</strong> <span style="color: green;"> Ready</span>
+        </p>
+        <p>Static files are working if you can see the styled text and image above.</p>
+    </div>
 </body>
 </html>
