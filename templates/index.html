@@ -3,43 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Our Landing Page</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <meta name="description" content="Satya - Your next-generation landing page">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Our Service</h1>
-        <nav>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Satya Logo" class="logo">
+            <h1>Welcome to Satya</h1>
+            <p class="tagline">Simple. Elegant. Effective.</p>
+        </div>
     </header>
 
-    <main>
+    <main class="main-content">
         <section class="hero">
-            <img src="/static/images/hero.jpg" alt="Hero Image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2RkZCIvPjx0ZXh0IHg9IjIwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5Ij5IZXJvIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
-            <h2>Revolutionary Solutions Await</h2>
-            <p>Join thousands of satisfied customers transforming their business</p>
-            <button onclick="alert('Thank you for your interest!')">Get Started Today</button>
+            <div class="container">
+                <h2>Your Landing Page Starts Here</h2>
+                <p>This is a clean, responsive landing page built with Flask.</p>
+                <button class="cta-button" onclick="scrollToSection()">Learn More</button>
+            </div>
         </section>
 
-        <section id="features">
-            <h2>Why Choose Us?</h2>
-            <div class="features-grid">
-                <div class="feature">Fast Performance</div>
-                <div class="feature">Secure Platform</div>
-                <div class="feature">24/7 Support</div>
+        <section class="features" id="features">
+            <div class="container">
+                <h2>Built for Performance</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h3>Fast Loading</h3>
+                        <p>Optimized for quick initial page loads</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Responsive Design</h3>
+                        <p>Looks great on all devices</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Minimal Setup</h3>
+                        <p>Just clone and run</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Satya. Built with Flask.</p>
+        </div>
     </footer>
 
-    <script src="/static/js/main.js"></script>
+    <script>
+        function scrollToSection() {
+            document.getElementById('features').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
