@@ -233,3 +233,66 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Satya - Your next-generation landing page">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Satya Logo" class="logo">
+            <h1>Welcome to Satya</h1>
+            <p class="tagline">Simple. Elegant. Effective.</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h2>Your Landing Page Starts Here</h2>
+                <p>This is a clean, responsive landing page built with Flask.</p>
+                <button class="cta-button" onclick="scrollToSection()">Learn More</button>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2>Built for Performance</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h3>Fast Loading</h3>
+                        <p>Optimized for quick initial page loads</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Responsive Design</h3>
+                        <p>Looks great on all devices</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Minimal Setup</h3>
+                        <p>Just clone and run</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Satya. Built with Flask.</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection() {
+            document.getElementById('features').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
